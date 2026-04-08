@@ -36,7 +36,7 @@ const Navbar = () => {
                         Login
                     </button>
                ) : (
-                    <UserButton />
+                    <UserButton></UserButton>
                )
             }
             
