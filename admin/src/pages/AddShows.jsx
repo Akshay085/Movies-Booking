@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { dummyShowsData } from '../../assets/assets';
-import Loading from '../../components/Loading';
-import Title from '../../components/admin/Title';
+import { dummyShowsData } from '../assets/assets';
+import Loading from '../components/Loading';
+import Title from '../components/Title';
 import { CheckIcon, DeleteIcon, StarIcon } from 'lucide-react';
-import kConverter from '../../lib/kConverter';
+import kConverter from '../lib/kConverter';
 
 const AddShows = () => {
 

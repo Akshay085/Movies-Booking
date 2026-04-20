@@ -35,7 +35,7 @@ const MovieDetails = () => {
         <div className='relative flex flex-col gap-3'>
           <BlurCircle top="-100px" left="-100px" />
           <p className='text-primary'>ENGLISH</p>
-          <h1 className='text-4xl font-semibold max-w-96 text-balance'>{show.movie.title}</h1>
+          <h1 className='text-4xl md:text-5xl font-serif font-semibold max-w-2xl text-balance'>{show.movie.title}</h1>
           <div className='flex items-center gap-2 text-gray-300'>
             <StarIcon className='w-5 h-5 text-primary fill-primary'/>
             {show.movie.vote_average.toFixed(1)} User Rating 
@@ -50,13 +50,13 @@ const MovieDetails = () => {
           </p>
 
           <div className='flex items-center flex-wrap gap-4 mt-4'>
-            <button className='flex items-center gap-2 px-7 py-3 text-sm bg-gray-800 hover:bg-gray-900 
-            transition rounded-md font-medium cursor-pointer active:scale-95'>
+            <button className='flex items-center gap-2 px-7 py-3 text-sm bg-surface hover:bg-black 
+            border border-white/10 transition rounded-md font-medium cursor-pointer active:scale-95'>
               <PlayCircleIcon className='w-5 h-5'/>
               Watch Trailer
             </button>
-            <a href="#dateSelect" className='px-10 py-3 text-sm bg-primary hover:bg-primary-dull transition rounded-md font-medium cursor-pointer active:scale-95'>Buy Tickets</a>
-            <button className='bg-gray-700 p-2.5 rounded-full transition cursor-pointer active:scale-95'>
+            <a href="#dateSelect" className='px-10 py-3 text-sm bg-primary hover:bg-primary-dull transition rounded-md font-medium cursor-pointer active:scale-95 text-black'>Buy Tickets</a>
+            <button className='bg-surface border border-white/10 p-2.5 rounded-full transition cursor-pointer active:scale-95'>
               <Heart className={`w-5 h-5`}/>
             </button>
           </div>

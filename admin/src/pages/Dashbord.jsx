@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { dummyDashboardData } from '../../assets/assets';
-import Loading from '../../components/Loading';
-import Title from '../../components/admin/Title';
+import { dummyDashboardData } from '../assets/assets';
+import Loading from '../components/Loading';
+import Title from '../components/Title';
 import { ChartLineIcon, IndianRupeeIcon, PlayCircleIcon, StarIcon, UserIcon } from 'lucide-react';
-import BlurCircle from '../../components/BlurCircle';
-import dateFormat from '../../lib/dateFormat';
+import BlurCircle from '../components/BlurCircle';
+import dateFormat from '../lib/dateFormat';
 
 
 const Dashbord = () => {

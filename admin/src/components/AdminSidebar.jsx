@@ -1,5 +1,5 @@
 import React from 'react'
-import { assets } from '../../assets/assets'
+import { assets } from '../assets/assets'
 import {  LayoutDashboardIcon, ListCollapseIcon, ListIcon, PlusSquareIcon } from 'lucide-react'
 import { NavLink } from 'react-router-dom'
 
@@ -12,11 +12,10 @@ const AdminSidebar = () => {
     }
 
     const adminNavLinks = [
-        { name: 'Dashbord', path: '/admin' , icon: LayoutDashboardIcon },
-        { name: 'Add Shows', path: '/admin/add-shows' , icon: PlusSquareIcon },
-        { name: 'List Shows', path: '/admin/list-shows' , icon: ListIcon},
-        { name: 'List Bookings', path: '/admin/list-bookings' , icon: ListCollapseIcon}, 
-
+        { name: 'Dashbord', path: '/' , icon: LayoutDashboardIcon },
+        { name: 'Add Shows', path: '/add-shows' , icon: PlusSquareIcon },
+        { name: 'List Shows', path: '/list-shows' , icon: ListIcon},
+        { name: 'List Bookings', path: '/list-bookings' , icon: ListCollapseIcon}, 
     ]
 
   return (

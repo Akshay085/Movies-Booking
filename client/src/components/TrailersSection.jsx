@@ -9,20 +9,18 @@ const TrailersSection = () => {
 
   return (
     <div className="px-6 md:px-12 lg:px-24 xl:px-44 py-20 overflow-hidden">
-      <p className="text-gray-300 font-medium text-lg max-w-[960px] mx-auto">
+      <p className="text-gray-300 font-serif font-semibold text-2xl max-w-[960px] mx-auto">
         Trailers
       </p>
 
-      <div className="relative mt-6">
+      <div className="relative mt-10 max-w-[960px] mx-auto aspect-video">
         <BlurCircle top="-100px" right="-100px" />
         <iframe
-          width="960"
-          height="540"
           src={currentTrailer.videoUrl.replace("watch?v=", "embed/")}
           title="YouTube video player"
           frameBorder="0"
           allowFullScreen
-          className="mx-auto"
+          className="w-full h-full rounded-2xl shadow-2xl"
         ></iframe>{" "}
       </div>
 

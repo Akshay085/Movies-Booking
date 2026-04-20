@@ -12,19 +12,18 @@
 }
 
 * {
-
   scrollbar-width: thin;
   scrollbar-color: #C5A059 #0B0A0F;
 }
 
 body {
   color: #E2E2E2;
-  background-color: var(--color-background , #0B0A0F);
+  background-color: var(--color-background, #0B0A0F);
   font-family: var(--font-sans, "Inter", sans-serif);
 }
 
 h1, h2, h3, h4, h5, h6, .cinematic-title {
-  font-family: var(--font-serif , "Cinzel" , serif);
+  font-family: var(--font-serif, "Cinzel", serif);
   letter-spacing: 0.05em;
 }
 
