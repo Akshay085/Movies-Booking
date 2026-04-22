@@ -10,7 +10,11 @@ import { inngest , functions } from './inngest/index.js';
 const app = express();
 const port = 3000;
 
-await connectDB();
+// Database connection middleware to ensure connection on every request
+app.use(async (req, res, next) => {
+    await connectDB();
+    next();
+});
 
 //Middlware
 app.use(express.json())
