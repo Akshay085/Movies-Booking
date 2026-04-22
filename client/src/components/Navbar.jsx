@@ -15,8 +15,8 @@ const Navbar = () => {
     <div className='fixed top-0 left-0 z-50 w-full flex items-center justify-between px-6 md:px-16 lg:px-36 py-5'>
         <Link to='/' className='max-md:flex-1'>
             <div className='flex items-center text-2xl tracking-[0.2em] font-logo'>
-                <span className='text-white'>Quick</span>
-                <span className='text-primary'>Show</span>
+                <span className='text-primary'>AVR</span>
+                <span className='text-white'>Theater</span>
             </div>
         </Link>
         
