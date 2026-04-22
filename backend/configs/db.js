@@ -2,8 +2,16 @@ import mongoose from "mongoose";
 import dns from "node:dns";
 
 export const connectDB = async () => {
-    // Set DNS servers to Google's public DNS to resolve SRV record issues
-    dns.setServers(['8.8.8.8', '8.8.4.4']);
+    if (mongoose.connection.readyState >= 1) {
+        return;
+    }
+
+    try {
+        // Try to set DNS servers to Google's public DNS to resolve SRV record issues locally
+        dns.setServers(['8.8.8.8', '8.8.4.4']);
+    } catch (error) {
+        console.log("Could not set DNS servers:", error.message);
+    }
     
     try {
         await mongoose.connect(process.env.MONGODB_CONNECT);
