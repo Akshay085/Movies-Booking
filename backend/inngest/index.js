@@ -6,7 +6,10 @@ import { connectDB } from "../configs/db.js";
 export const inngest = new Inngest({ id: "movie-ticket-booking" });
 
 const syncUserCreation = inngest.createFunction(
-    { id: 'sync-user-from-clerk', event: 'clerk/user.created' }, 
+    { 
+        id: 'sync-user-from-clerk',
+        triggers: [{ event: 'clerk/user.created' }]
+    },
     async ({ event }) => {
         await connectDB();
         console.log("Webhook Received:", event.data);
@@ -18,27 +21,33 @@ const syncUserCreation = inngest.createFunction(
             name: first_name + (last_name ? ' ' + last_name : ''),
             image: image_url || ""
         }
-        await User.create(userData)
+        await User.create(userData);
     }
 )
 
 //Inngest Function to delete from database
 
 const syncUserDeletion = inngest.createFunction(
-    { id: 'delete-user-with-clerk', event: 'clerk/user.deleted' }, 
+    { 
+        id: 'delete-user-with-clerk',
+        triggers: [{ event: 'clerk/user.deleted' }]
+    },
     async ({ event }) => {
         await connectDB();
         console.log("Delete Webhook Received:", event.data);
         const payload = event.data.data || event.data;
         const { id } = payload;
-        await User.findByIdAndDelete(id)
+        await User.findByIdAndDelete(id);
     }
 )
 
 //Inngest Function to update data in database
 
 const syncUserUpdation = inngest.createFunction(
-    { id: 'update-user-from-clerk', event: 'clerk/user.updated' }, 
+    { 
+        id: 'update-user-from-clerk',
+        triggers: [{ event: 'clerk/user.updated' }]
+    },
     async ({ event }) => {
         await connectDB();
         console.log("Update Webhook Received:", event.data);
@@ -50,7 +59,7 @@ const syncUserUpdation = inngest.createFunction(
             name: first_name + (last_name ? ' ' + last_name : ''),
             image: image_url || ""
         }
-        await User.findByIdAndUpdate(id, userData)
+        await User.findByIdAndUpdate(id, userData);
     }
 )
 
