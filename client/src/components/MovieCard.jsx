@@ -5,12 +5,13 @@ import timeFormat from '../lib/timeFormat'
 
 const MovieCard = ({movie}) => {
 
-    const navigate =useNavigate()
+    const navigate = useNavigate()
+    const image_base_url = import.meta.env.VITE_TMDB_IMAGE_BASE_URL;
   return (
     <div className='flex flex-col justify-between p-3 bg-surface border border-white/5 rounded-2xl hover:-translate-y-1 hover:border-primary/20 transition duration-300 w-66 shadow-xl'>
         
         <img onClick={()=> {navigate(`/movies/${movie._id}`); scrollTo(0,0)}}
-        src={movie.backdrop_path} alt='' className='rounded-lg h-52 w-full object-cover object-right-bottom cursor-pointer' />
+        src={image_base_url + movie.poster_path} alt='' className='rounded-lg h-52 w-full object-cover object-right-bottom cursor-pointer' />
 
         <p className='font-serif font-semibold mt-2 truncate text-lg'>{movie.title}</p>
 
@@ -19,7 +20,7 @@ const MovieCard = ({movie}) => {
         </p>
 
         <div className='flex items-center justify-between mt-4 pb-3'>
-            <button onClick={()=> {navigate(`/movie/${movie._id}`); scrollTo(0,0)}}
+            <button onClick={()=> {navigate(`/movies/${movie._id}`); scrollTo(0,0)}}
             className='px-4 py-2 text-xs bg-primary hover:bg-primary-dull transition rounded-full font-medium cursor-pointer'>
                 Buy Tickets
             </button>
