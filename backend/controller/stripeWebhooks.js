@@ -16,11 +16,12 @@ const stripeWebhooks = async (req ,res) => {
     }
 
     try {
-       
+        let bookingId;
+
         if (event.type === "checkout.session.completed") {
             const session = event.data.object;
             if (session.payment_status === "paid") {
-                const bookingId = session.metadata.bookingId;
+                bookingId = session.metadata.bookingId;
                 await bookingModel.findByIdAndUpdate(bookingId, {
                     isPaid: true,
                     paymentLink: ""
@@ -31,18 +32,21 @@ const stripeWebhooks = async (req ,res) => {
         if (event.type === "payment_intent.succeeded") {
             const paymentIntent = event.data.object;
             if (paymentIntent.metadata && paymentIntent.metadata.bookingId) {
-                await bookingModel.findByIdAndUpdate(paymentIntent.metadata.bookingId, {
+                bookingId = paymentIntent.metadata.bookingId;
+                await bookingModel.findByIdAndUpdate(bookingId, {
                     isPaid: true,
                     paymentLink: ""
                 });
             }
         }
 
-        // Send Confirmation Email
+        // Send Confirmation Email only if payment was successful and bookingId is found
+        if (bookingId) {
             await inngest.send({
                 name: "app/show.booked",
                 data: { bookingId }
             });
+        }
 
         res.status(200).json({ received: true });
 

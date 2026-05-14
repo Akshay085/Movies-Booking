@@ -102,15 +102,21 @@ const sendBookingConfirmationEmail = inngest.createFunction(
         triggers: [{ event: "app/show.booked" }],
     },
    async ({event , step}) => {
+        await connectDB();
         const { bookingId } = event.data;
         const booking = await bookingModel.findById(bookingId).populate({
             path: 'show',
             populate: { path: "movie", model: "Movie" }
         }).populate('user');
 
+        if (!booking || !booking.user) {
+            console.error("Booking or User not found for ID:", bookingId);
+            return;
+        }
+
         await sendEmail({
             to: booking.user.email,
-            subject: `Payment Conformation: "${booking.show.movie.title}" booked!`,
+            subject: `Payment Confirmation: "${booking.show.movie.title}" booked!`,
             body: ` <div style="font-family: Arial, sans-serif; line-height: 1.5;">
                         <h2>Hi ${booking.user.name},</h2>
                         <p>Your booking for <strong style="color: #F84565;">"${booking.show.movie.title}"</strong> 
@@ -120,7 +126,6 @@ const sendBookingConfirmationEmail = inngest.createFunction(
                                 .toLocaleDateString('en-US', { timeZone: 'Asia/Kolkata'})} <br/>
                             <strong>Time:</strong> ${new Date(booking.show.showDateTime)
                                 .toLocaleTimeString('en-US', { timeZone: 'Asia/Kolkata'})} <br/>
-                            }
                         </p>
                         <p>Enjoy the show! 🎬🍿</p>
                         <p>Thank you for booking with us!<br/>-- AVR Theater Team</p>
