@@ -1,5 +1,6 @@
 import Stripe from "stripe";
 import bookingModel from "../models/bookingModel.js";
+import { inngest } from "../inngest/index.js";
 
 const stripeWebhooks = async (req ,res) => {
     const stripeInstance = new Stripe(process.env.STRIPE_SECRET_KEY);
@@ -35,6 +36,14 @@ const stripeWebhooks = async (req ,res) => {
                     paymentLink: ""
                 });
             }
+        }
+
+        // Send Confirmation Email
+        if (bookingId) {
+            await inngest.send({
+                name: "app/show.booked",
+                data: { bookingId }
+            });
         }
 
         res.status(200).json({ received: true });
