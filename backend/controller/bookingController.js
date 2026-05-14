@@ -146,6 +146,11 @@ const verifyPayments = async (req, res) => {
                                 booking.isPaid = true;
                                 booking.paymentLink = "";
                                 await booking.save();
+                                // Send Confirmation Email
+                                await inngest.send({
+                                    name: "app/show.booked",
+                                    data: { bookingId: booking._id.toString() }
+                                });
                             }
                         } catch(e) {
                             console.error("Failed to verify PI:", e.message);
@@ -160,6 +165,11 @@ const verifyPayments = async (req, res) => {
                                     booking.isPaid = true;
                                     booking.paymentLink = "";
                                     await booking.save();
+                                    // Send Confirmation Email
+                                    await inngest.send({
+                                        name: "app/show.booked",
+                                        data: { bookingId: booking._id.toString() }
+                                    });
                                 }
                             } catch (e) {
                                 console.error("Failed to verify session:", e.message);

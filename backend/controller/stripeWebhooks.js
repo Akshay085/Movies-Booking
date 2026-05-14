@@ -9,7 +9,8 @@ const stripeWebhooks = async (req ,res) => {
     let event;
 
     try {
-        event = stripeInstance.webhooks.constructEvent(req.body , sig, process.env.STRIPE_WEBHOOK_SECRET);         
+        event = stripeInstance.webhooks.constructEvent(req.body , sig, process.env.STRIPE_WEBHOOK_SECRET);
+        console.log("Stripe Webhook Received:", event.type);
     } catch (error) {
         console.error(`Webhook Signature Error: ${error.message}`);
         return res.status(400).send(`Webhook Error: ${error.message}`);
@@ -42,6 +43,7 @@ const stripeWebhooks = async (req ,res) => {
 
         // Send Confirmation Email only if payment was successful and bookingId is found
         if (bookingId) {
+            console.log("Sending Confirmation Email Event for Booking ID:", bookingId);
             await inngest.send({
                 name: "app/show.booked",
                 data: { bookingId }
