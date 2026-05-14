@@ -39,12 +39,10 @@ const stripeWebhooks = async (req ,res) => {
         }
 
         // Send Confirmation Email
-        if (bookingId) {
             await inngest.send({
                 name: "app/show.booked",
                 data: { bookingId }
             });
-        }
 
         res.status(200).json({ received: true });
 
