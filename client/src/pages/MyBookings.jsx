@@ -21,6 +21,13 @@ const MyBookings = () => {
         setIsLoading(false);
         return;
       }
+
+      try {
+        await axios.post('/api/booking/verify', {}, { headers: { Authorization: `Bearer ${token}` } })
+      } catch (e) {
+        console.error("Verification failed", e);
+      }
+
       const { data } = await axios.get('/api/user/bookings', { headers: { Authorization: `Bearer ${token}` } })
       if (data.success) {
         setBookings(data.bookings)

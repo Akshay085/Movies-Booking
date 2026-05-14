@@ -90,7 +90,7 @@ const SeatLayout = () => {
       }, { headers: { Authorization: `Bearer ${token}` } })
 
       if (data.success) {
-        window.location.href = data.url;
+        navigate(`/payment/${data.bookingId}`, { state: { clientSecret: data.clientSecret } });
       } else {
         toast.error(data.message)
       }

@@ -18,7 +18,7 @@ const port = 3000;
 await connectDB();
 
 // Stripe Webhook Route
-app.use('/api/stripe', express.raw({type: 'application/json'}), stripeWebhooks);
+app.post('/api/stripe', express.raw({type: "application/json"}), stripeWebhooks);
 
 //Middlware
 app.use(express.json())
