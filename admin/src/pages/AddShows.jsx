@@ -96,10 +96,12 @@ const AddShows = () => {
   },[]);
 
   return nowPlayingMovies.length > 0 ? (
-    <>
+    <div className='pb-10 max-w-5xl'>
       <Title text1="Add" text2="Shows" />
+      
+      {/* Kept Original: Horizontal Movie Selection */}
       <p className='my-10 text-lg font-medium'>Now Playing Movies</p>
-      <div className='overflow-x-auto pb-4'>
+      <div className='overflow-x-auto pb-4 no-scrollbar'>
         <div className='group flex flex-wrap gap-4 mt-4 w-max'>
           {nowPlayingMovies.map((movie)=>(
             <div key={movie.id} className={`relative max-w-40 cursor-pointer group-hover:not-hover:opacity-40 hover:-translate-y-1 
@@ -115,63 +117,76 @@ const AddShows = () => {
                 </div>
               </div>
               {selectedMovie === movie.id && (
-                <div className='absolute top-2 right-2 flex items-center justify-center bg-primary h-6 w-6 rounded'>
+                <div className='absolute top-2 right-2 flex items-center justify-center bg-primary h-6 w-6 rounded shadow-lg'>
                   <CheckIcon className='w-4 h-4 text-white' strokeWidth={2.5}/>
                 </div>
               )}
-              <p className='font-medium truncate'>{movie.title}</p>
+              <p className='font-medium truncate mt-2'>{movie.title}</p>
               <p className='text-gray-400 text-sm'>{movie.release_date}</p>
             </div>
           ))}
         </div>
       </div>
 
-      {/* Show Price Input */}
-      <div className='mt-8'>
-          <label className='block text-sm font-medium mb-2'>Show Price</label>
-          <div className='inline-flex items-center gap-2 border border-gray-600 px-3 py-2 rounded-md'>
-            <p className='text-gray-400 text-sm'>{currency}</p>
-            <input min={0} type="number" value={showPrice} onChange={(e)=> setShowPrice(e.target.value)} 
-            placeholder="Enter Show Price" className='outline-none'/>
+      {/* Responsive Sections: Price and Date/Time */}
+      <div className='grid grid-cols-1 md:grid-cols-2 gap-8 mt-12'>
+        <div className='space-y-6'>
+          {/* Show Price Input */}
+          <div>
+              <label className='block text-sm font-medium mb-2 text-gray-300'>Show Price</label>
+              <div className='flex items-center gap-2 border border-primary/20 bg-primary/5 px-4 py-3 rounded-xl focus-within:border-primary/50 transition-all'>
+                <span className='text-primary font-bold'>{currency}</span>
+                <input min={0} type="number" value={showPrice} onChange={(e)=> setShowPrice(e.target.value)} 
+                placeholder="0.00" className='bg-transparent outline-none flex-1 text-white'/>
+              </div>
           </div>
+
+          {/* Date and Time Selection*/}
+          <div>
+              <label className='block text-sm font-medium mb-2 text-gray-300'>Select Date and Time</label>
+              <div className='flex flex-col sm:flex-row gap-3'>
+                <div className='flex-1 border border-primary/20 bg-primary/5 px-4 py-3 rounded-xl focus-within:border-primary/50 transition-all'>
+                  <input type="datetime-local" value={dateTimeInput} onChange={(e)=> setDateTimeInput(e.target.value)} 
+                  className='bg-transparent outline-none w-full text-white invert-[0.8] brightness-200'/>
+                </div>
+                <button onClick={handleDateTimeAdd} className='bg-primary text-black font-bold px-6 py-3 rounded-xl hover:bg-primary-dull transition-all cursor-pointer active:scale-95'>
+                  Add Time
+                </button>
+              </div>
+          </div>
+        </div>
+
+        {/* Selected Schedule List */}
+        <div className='bg-primary/5 border border-primary/10 rounded-2xl p-6'>
+          <h2 className='text-sm font-semibold mb-4 text-primary uppercase tracking-wider'>Selected Schedule</h2>
+          {Object.keys(dateTimeSelection).length > 0 ? (
+            <ul className='space-y-4'>
+              {Object.entries(dateTimeSelection).map(([date,times])=>(
+                <li key={date} className='border-b border-primary/10 pb-3 last:border-0'>
+                  <div className='text-xs font-bold text-gray-400 mb-2 uppercase'>{new Date(date).toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' })}</div>
+                  <div className='flex flex-wrap gap-2'>
+                    {times.map((time)=>(
+                      <div key={time} className='bg-primary/10 border border-primary/30 px-3 py-1.5 flex items-center rounded-lg'>
+                        <span className='text-sm'>{time}</span>
+                        <DeleteIcon onClick={()=>handleRemoveTime(date , time)} width={14} className='ml-2 text-red-400 hover:text-red-500 cursor-pointer' />
+                      </div>
+                    ))}
+                  </div>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className='text-gray-500 text-sm italic text-center py-10'>No schedule added yet.</p>
+          )}
+        </div>
       </div>
 
-      {/* Date and Time Selection*/}
-      <div className='mt-6'>
-          <label className='block text-sm font-medium mb-2'>Select Date and Time</label>
-          <div className='inline-flex gap-5 border border-gray-600 p-1 pl-3 rounded-lg'>
-            <input type="datetime-local" value={dateTimeInput} onChange={(e)=> setDateTimeInput(e.target.value)} 
-            className='outline-none rounded-md'/>
-            <button onClick={handleDateTimeAdd} className='bg-primary/80 text-white px-3 py-2 text-sm rounded-lg 
-            hover:bg-primary cursor-pointer'>Add Time</button>
-          </div>
+      <div className='mt-10 pt-6 border-t border-primary/10'>
+        <button onClick={handleAddShow} className='w-full md:w-auto bg-primary text-black font-bold px-12 py-4 rounded-xl hover:bg-primary-dull transition-all cursor-pointer active:scale-95 shadow-lg shadow-primary/20'>
+          Create Shows
+        </button>
       </div>
-      {/* Display Selected Times */}
-      {Object.keys(dateTimeSelection).length > 0 && (
-        <div className='mt-6'>
-          <h2 className='mb-2'>Selected Date-Time</h2>
-          <ul className='space-y-3'>
-            {Object.entries(dateTimeSelection).map(([date,times])=>(
-              <li key={date}>
-                <div className='font-medium'>{date}</div>
-                <div className='flex flex-wrap gap-2 mt-1 text-sm'>
-                  {times.map((time)=>(
-                    <div key={time} className='border border-primary px-2 py-1 flex items-center rounded'>
-                      <span>{time}</span>
-                      <DeleteIcon onClick={()=>handleRemoveTime(date , time)} width={15} className='ml-2 text-red-500
-                      hover:text-red-700 cursor-pointer' />
-                    </div>
-                  ))}
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-      <button onClick={handleAddShow} className='bg-primary text-white px-8 py-2 mt-6 rounded hover:bg-primary/90 transition-all cursor-pointer'>
-        Add Show
-      </button>
-    </>
+    </div>
   ) : <Loading />
 }
 

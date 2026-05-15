@@ -125,15 +125,15 @@ const SeatLayout = () => {
   },[id])
 
   return show ? (
-    <div className="flex flex-col md:flex-row px-6 md:px-16 lg:px-40 py-30 md:pt-50">
-      {/* Available Timing */}
-      <div className='w-60 bg-surface border border-white/5 rounded-lg py-10 h-max md:sticky md:top-30 shadow-2xl'>
-        <p className='text-lg font-serif font-semibold px-6 text-primary'>Available Timing</p>
-        <div className='mt-5 space-y-1'>
+    <div className="flex flex-col lg:flex-row px-4 md:px-16 lg:px-40 py-24 md:py-40 gap-10">
+      {/* Available Timing - Top on mobile, Side on desktop */}
+      <div className='w-full lg:w-64 shrink-0 bg-surface border border-white/5 rounded-2xl py-8 h-max lg:sticky lg:top-32 shadow-2xl'>
+        <p className='text-lg font-serif font-semibold px-6 text-primary border-b border-white/5 pb-4 mb-4'>Show Timings</p>
+        <div className='flex lg:flex-col overflow-x-auto lg:overflow-x-visible no-scrollbar px-2 lg:px-0 gap-2 lg:gap-1'>
           {show.dateTime[date]?.map((item)=>(
             <div key={item.time} onClick={()=> setSelectedTime(item)}
-            className={`flex items-center gap-2 px-6 py-2 w-max rounded-r-md cursor-pointer transition ${selectedTime?.time ===
-              item.time ? 'bg-primary text-black' : 'hover:bg-primary/10'}` }>
+            className={`flex items-center gap-3 px-6 py-3 min-w-max lg:w-full rounded-xl lg:rounded-r-full lg:rounded-l-none cursor-pointer transition-all duration-300 ${selectedTime?.time ===
+              item.time ? 'bg-primary text-black font-bold' : 'text-gray-400 hover:bg-primary/10 hover:text-white'}` }>
               <ClockIcon className='w-4 h-4'/>
               <p className='text-sm'>{isoTimeFormat(item.time)}</p>
             </div>
@@ -141,31 +141,66 @@ const SeatLayout = () => {
         </div>
       </div>
       
-      {/* Seat Layout */}
-      <div className='relative flex-1 flex flex-col items-center max-md:mt-16'>
+      {/* Seat Layout - Centered */}
+      <div className='relative flex-1 flex flex-col items-center bg-surface/30 backdrop-blur-sm border border-white/5 rounded-3xl p-6 md:p-10 shadow-inner'>
           <BlurCircle top="-100px" left="-100px"/>
           <BlurCircle bottom="0" right="0"/>
-          <h1 className='text-3xl font-serif font-semibold mb-6 text-primary text-center'>Select your seat</h1>
-          <img src={assets.screenImage} alt="screen" className="brightness-75" />
-          <p className='text-gray-400 text-sm mb-6 tracking-widest'>SCREEN SIDE</p>
-          <div className='flex flex-col items-center mt-10 text-xs text-gray-300'>
-            <div className='grid grid-cols-2 md:grid-cols-1 gap-8 md:gap-2 mb-6'>
-              {groupRows[0].map(row => renderSeats(row))}
-            </div>
-            <div className='grid grid-cols-2 gap-11'>
-              {groupRows.slice(1).map((group, idx) => (
-                <div key={idx} >
-                  {group.map(row => renderSeats(row))}
-                </div>
-              ))}
+          
+          <div className='text-center mb-10'>
+            <h1 className='text-3xl md:text-4xl font-serif font-bold text-white mb-2'>Choose Your Seats</h1>
+            <p className='text-primary text-sm font-medium tracking-widest uppercase'>{show.movie.title}</p>
+          </div>
+
+          <div className='w-full max-w-2xl flex flex-col items-center'>
+            <img src={assets.screenImage} alt="screen" className="w-full brightness-90 contrast-125" />
+            <div className='w-full h-1 bg-primary/20 blur-sm rounded-full mt-1' />
+            <p className='text-gray-500 text-[10px] md:text-xs mt-3 tracking-[0.5em] font-bold uppercase'>All eyes this way</p>
+          </div>
+
+          {/* Seat Grid with Scroll on Mobile */}
+          <div className='w-full overflow-x-auto py-10 no-scrollbar cursor-grab active:cursor-grabbing'>
+            <div className='flex flex-col items-center min-w-[500px] md:min-w-0'>
+              <div className='flex flex-col items-center gap-2 mb-8'>
+                {groupRows[0].map(row => renderSeats(row))}
+              </div>
+              <div className='grid grid-cols-2 gap-10 md:gap-20'>
+                {groupRows.slice(1).map((group, idx) => (
+                  <div key={idx} className='flex flex-col gap-2'>
+                    {group.map(row => renderSeats(row))}
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
-          <button onClick={handleBooking} 
-          className='flex items-center gap-1 mt-20 px-10 py-3 text-sm bg-primary hover:bg-primary-dull 
-          transition rounded-full font-medium cursor-pointer active:scale-95'>
-            Proceed To Checkout
-            <ArrowRightIcon strokeWidth={3} className="w-4 h-4"/>
-          </button>
+
+          {/* Legend */}
+          <div className='flex flex-wrap justify-center gap-6 mt-6 text-xs text-gray-400 border-t border-white/5 pt-8 w-full'>
+            <div className='flex items-center gap-2'>
+              <div className='w-4 h-4 rounded border border-primary/60' />
+              <span>Available</span>
+            </div>
+            <div className='flex items-center gap-2'>
+              <div className='w-4 h-4 rounded bg-primary text-black flex items-center justify-center text-[8px]'>✓</div>
+              <span>Selected</span>
+            </div>
+            <div className='flex items-center gap-2'>
+              <div className='w-4 h-4 rounded bg-gray-700 text-gray-400' />
+              <span>Sold</span>
+            </div>
+          </div>
+
+          <div className='mt-12 flex flex-col items-center gap-4 w-full'>
+            {selectedSeats.length > 0 && (
+              <p className='text-sm text-gray-300'>
+                Selected: <span className='text-primary font-bold'>{selectedSeats.join(", ")}</span>
+              </p>
+            )}
+            <button onClick={handleBooking} 
+            className='flex items-center justify-center gap-3 w-full sm:w-auto px-12 py-4 text-sm bg-primary hover:bg-primary-dull transition-all rounded-xl font-bold text-black cursor-pointer active:scale-95 shadow-lg shadow-primary/20 disabled:opacity-50 disabled:cursor-not-allowed'>
+              Proceed to Payment
+              <ArrowRightIcon strokeWidth={3} className="w-5 h-5"/>
+            </button>
+          </div>
       </div>
     </div>
   ) : (

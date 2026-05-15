@@ -59,35 +59,47 @@ const MyBookings = () => {
       ) : (
         bookings.map((item, index)=>(
           <div key={index} className='flex flex-col md:flex-row justify-between bg-surface border
-          border-white/5 rounded-lg mt-6 p-3 max-w-3xl shadow-lg'>
-            <div className='flex flex-col md:flex-row'>
+          border-white/5 rounded-2xl mt-6 p-4 max-w-4xl shadow-xl transition hover:border-primary/20'>
+            <div className='flex flex-col sm:flex-row gap-4'>
               <img 
                 onClick={()=> {navigate(`/movies/${item.show.movie._id}`); scrollTo(0,0)}}
                 src={image_base_url + item.show.movie.poster_path} 
                 alt="" 
-                className='md:max-w-45 aspect-video h-auto object-cover object-bottom rounded cursor-pointer hover:opacity-80 transition'
+                className='w-full sm:w-32 aspect-[2/3] object-cover rounded-xl cursor-pointer hover:opacity-80 transition shadow-lg'
               />
-              <div className='flex flex-col p-4'>
+              <div className='flex flex-col py-2'>
                 <p 
                   onClick={()=> {navigate(`/movies/${item.show.movie._id}`); scrollTo(0,0)}}
-                  className='text-lg font-semibold cursor-pointer hover:text-primary transition'
+                  className='text-xl font-bold cursor-pointer hover:text-primary transition text-white'
                 >
                   {item.show.movie.title}
                 </p>
-                <p className='text-gray-400 text-sm'>{timeFormat(item.show.movie.runtime)}</p>
-                <p className='text-gray-400 text-sm mt-auto'>{dateFormat(item.show.showDateTime)}</p>
+                <p className='text-gray-400 text-sm font-medium'>{timeFormat(item.show.movie.runtime)}</p>
+                
+                <div className='mt-4 md:mt-auto space-y-1'>
+                   <p className='text-primary font-semibold text-sm'>{dateFormat(item.show.showDateTime)}</p>
+                   <p className='text-gray-500 text-xs'>Booking ID: <span className='text-gray-300'>{item._id.slice(-8).toUpperCase()}</span></p>
+                </div>
               </div>
             </div>
 
-            <div className='flex flex-col md:items-end md:text-right justify-between p-4'>
-              <div className='flex items-center gap-4'>
-                <p className='text-2xl font-semibold mb-3'>{currency}{item.amount}</p>
-                {!item.isPaid && <Link to={item.paymentLink} className='bg-primary px-4 py-1.5 mb-3 text-sm rounded-full font-medium cursor-pointer'>
-                  Pay Now</Link>}
+            <div className='flex flex-col md:items-end justify-between p-2 mt-4 md:mt-0 border-t md:border-t-0 border-white/5 pt-4 md:pt-0'>
+              <div className='flex items-center justify-between md:justify-end gap-4 w-full'>
+                <p className='text-2xl font-bold text-white'>{currency}{item.amount}</p>
+                {!item.isPaid && (
+                  <Link to={item.paymentLink} className='bg-primary px-6 py-2 text-sm rounded-full font-bold text-black cursor-pointer hover:bg-primary-dull transition shadow-lg shadow-primary/20'>
+                    Pay Now
+                  </Link>
+                )}
+                {item.isPaid && (
+                  <span className='bg-green-500/20 text-green-500 px-4 py-1 text-xs rounded-full font-bold uppercase tracking-wider'>
+                    Confirmed
+                  </span>
+                )}
               </div>
-              <div className='text-sm'>
-                  <p><span className='text-gray-400'>Total Tickets:</span> {item.bookedSeats.length}</p>
-                  <p><span className='text-gray-400'>Seat Number:</span> {item.bookedSeats.join(", ")}</p>
+              <div className='text-sm mt-4 md:text-right space-y-1'>
+                  <p className='text-gray-400'>Tickets: <span className='text-white font-medium'>{item.bookedSeats.length}</span></p>
+                  <p className='text-gray-400'>Seats: <span className='text-primary font-bold'>{item.bookedSeats.join(", ")}</span></p>
               </div>
             </div>
 

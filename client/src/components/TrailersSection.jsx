@@ -24,23 +24,25 @@ const TrailersSection = () => {
         ></iframe>{" "}
       </div>
 
-      <div className="group grid grid-cols-4 gap-4 md:gap-8 mt-8 max-w-3xl mx-auto">
+      <div className="group grid grid-cols-2 sm:grid-cols-4 gap-4 md:gap-8 mt-8 max-w-3xl mx-auto">
         {dummyTrailers.map((trailer) => (
           <div
             key={trailer.image}
             className="relative group-hover:not-hover:opacity-50 hover:-translate-y-1 duration-300 transition
-                max-md:h-60 md:max-h-60 cursor-pointer"
+                h-24 sm:h-32 md:h-40 cursor-pointer"
             onClick={() => setCurrentTrailer(trailer)}
           >
             <img
               src={trailer.image}
               alt="trailer"
-              className="rounded-lg w-full h-full object-cover brightness-75"
+              className="rounded-lg w-full h-full object-cover brightness-75 border border-white/10"
             />
-            <PlayCircleIcon
-              strokeWidth={1.6}
-              className="absolute top-1/2 left-1/2 w-5 md:w-8 h-5 md:h-12 transform -translate-x-1/2 -translate-y-1/2"
-            />
+            <div className="absolute inset-0 flex items-center justify-center">
+              <PlayCircleIcon
+                strokeWidth={1.5}
+                className="w-6 md:w-10 h-6 md:h-10 text-white/80 group-hover:text-primary transition-colors"
+              />
+            </div>
           </div>
         ))}
       </div>

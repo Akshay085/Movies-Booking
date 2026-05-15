@@ -45,6 +45,7 @@ const addShow = async (req, res) => {
 
         if (!movie) {
             let movieApiData, movieCreditsData;
+            let trailerKey = "";
 
             try {
                 const [details, credits, videos] = await Promise.all([
@@ -57,7 +58,7 @@ const addShow = async (req, res) => {
                 movieCreditsData = credits.data;
 
                 const trailer = videos.data.results.find(vid => vid.type === 'Trailer' && vid.site === 'YouTube');
-                const trailerKey = trailer ? trailer.key : "";
+                trailerKey = trailer ? trailer.key : "";
 
             } catch (apiError) {
                 console.error("TMDB Error:", apiError.message);
