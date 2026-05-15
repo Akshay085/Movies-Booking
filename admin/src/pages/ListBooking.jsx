@@ -6,8 +6,7 @@ import { useAppContext } from '../context/AppContext';
 
 const ListBooking = () => {
 
-  const currency = import.meta.env.VITE_CURRENCY
-  const { axios } = useAppContext();
+  const { axios, currency } = useAppContext();
 
   const [bookings , setBookings] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -43,6 +42,7 @@ const ListBooking = () => {
               <th className='p-2 font-medium'>Show Time</th>
               <th className='p-2 font-medium'>Seats</th>
               <th className='p-2 font-medium'>Amount</th>
+              <th className='p-2 font-medium'>Status</th>
             </tr>
           </thead>
           <tbody className='text-sm font-light'>
@@ -53,6 +53,11 @@ const ListBooking = () => {
                 <td className='p-2'>{dateFormat(item.show.showDateTime)}</td>
                 <td className='p-2'>{Object.keys(item.bookedSeats).map(seat => item.bookedSeats[seat]).join(", ")}</td>
                 <td className='p-2'>{currency} {item.amount}</td>
+                <td className='p-2'>
+                  <span className={`px-2 py-0.5 rounded-full text-xs ${item.isPaid ? 'bg-green-500/20 text-green-500' : 'bg-orange-500/20 text-orange-500'}`}>
+                    {item.isPaid ? "Paid" : "Unpaid"}
+                  </span>
+                </td>
               </tr>
             ))}
           </tbody>

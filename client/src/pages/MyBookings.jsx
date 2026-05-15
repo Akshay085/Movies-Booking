@@ -7,8 +7,7 @@ import { useAppContext } from '../context/AppContext'
 import { Link, useNavigate } from 'react-router-dom'
 
 const MyBookings = () => {
-  const currency = import.meta.env.VITE_CURRENCY
-  const { axios, getToken, image_base_url } = useAppContext()
+  const { axios, getToken, image_base_url, currency } = useAppContext()
   const navigate = useNavigate()
 
   const [bookings, setBookings] = useState([])

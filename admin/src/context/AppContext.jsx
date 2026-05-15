@@ -12,11 +12,13 @@ export const AppProvider = ({ children }) => {
     const navigate = useNavigate()
 
     const image_base_url = import.meta.env.VITE_TMDB_IMAGE_BASE_URL;
+    const currency = import.meta.env.VITE_CURRENCY || '₹';
 
     const value = {
         axios,
         navigate,
-        image_base_url
+        image_base_url,
+        currency
     }
 
     return (

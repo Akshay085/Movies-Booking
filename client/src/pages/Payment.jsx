@@ -16,8 +16,7 @@ const Payment = () => {
     const { bookingId } = useParams();
     const location = useLocation();
     const navigate = useNavigate();
-    const { axios, getToken, image_base_url } = useAppContext();
-    const currency = import.meta.env.VITE_CURRENCY;
+    const { axios, getToken, image_base_url, currency } = useAppContext();
     
     const [booking, setBooking] = useState(null);
     const [clientSecret, setClientSecret] = useState(location.state?.clientSecret || null);

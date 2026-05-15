@@ -11,14 +11,14 @@ const isAdmin = async (req , res) => {
 // API to get dashboard data 
 const getDashboardData = async (req , res) => {
     try {
-        const bookings = await bookingModel.find({isPaid: true});
+        const bookings = await bookingModel.find({});
         const activeShows = await showModel.find({showDateTime: {$gte: new Date()}}).populate('movie');
 
         const totalUser = await userModel.countDocuments();
 
         const dashboardData = {
             totalBookings: bookings.length,
-            totalRevenue: bookings.reduce((acc, booking) => acc + booking.amount, 0),
+            totalRevenue: bookings.filter(item => item.isPaid).reduce((acc, booking) => acc + booking.amount, 0),
             activeShows,
             totalUser,
         }

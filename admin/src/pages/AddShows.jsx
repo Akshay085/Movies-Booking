@@ -8,8 +8,7 @@ import toast from 'react-hot-toast';
 
 const AddShows = () => {
 
-  const currency = import.meta.env.VITE_CURRENCY
-  const { axios , image_base_url } = useAppContext();
+  const { axios , image_base_url, currency } = useAppContext();
   const [nowPlayingMovies , setNowPlayingMovies] = useState([]);
   const [selectedMovie , setSelectedMovie] = useState(null);
   const [dateTimeSelection , setDateTimeSelection] = useState({});

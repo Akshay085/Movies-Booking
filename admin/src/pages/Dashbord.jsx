@@ -9,8 +9,7 @@ import { useAppContext } from '../context/AppContext';
 
 const Dashbord = () => {
 
-  const currency = import.meta.env.VITE_CURRENCY
-  const { axios , image_base_url } = useAppContext();
+  const { axios , image_base_url, currency } = useAppContext();
 
   const [dashboardData , setDashboardData] = useState({
     totalBookings: 0,
@@ -21,8 +20,8 @@ const Dashbord = () => {
   const [loading , setLoading] = useState(true);
 
   const dashboardCards = [
-    { title: "Total Bookings" , value: dashboardData.totalBookings || "0", icon: ChartLineIcon },
-    { title: "Total Revenue" , value: currency + dashboardData.totalRevenue || "0" , icon: IndianRupeeIcon }, 
+    { title: "Total Bookings" , value: dashboardData.totalBookings || 0, icon: ChartLineIcon },
+    { title: "Total Revenue" , value: currency + " " + (dashboardData.totalRevenue || 0) , icon: IndianRupeeIcon }, 
     { title: "Active Show" , value: dashboardData.activeShows.length || "0" , icon: PlayCircleIcon },
     { title: "Total Users" , value: dashboardData.totalUser || "0" , icon: UserIcon }
   ]

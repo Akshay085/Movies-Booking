@@ -80,8 +80,10 @@ const MovieDetails = () => {
           </p>
 
           <div className='flex items-center flex-wrap gap-4 mt-4'>
-            <button className='flex items-center gap-2 px-7 py-3 text-sm bg-surface hover:bg-black 
-            border border-white/10 transition rounded-md font-medium cursor-pointer active:scale-95'>
+            <button 
+              onClick={() => show.movie.trailer ? window.open(`https://www.youtube.com/watch?v=${show.movie.trailer}`, '_blank') : toast.error("Trailer not available")}
+              className='flex items-center gap-2 px-7 py-3 text-sm bg-surface hover:bg-black 
+              border border-white/10 transition rounded-md font-medium cursor-pointer active:scale-95'>
               <PlayCircleIcon className='w-5 h-5'/>
               Watch Trailer
             </button>

@@ -47,13 +47,17 @@ const addShow = async (req, res) => {
             let movieApiData, movieCreditsData;
 
             try {
-                const [details, credits] = await Promise.all([
+                const [details, credits, videos] = await Promise.all([
                     fetchWithRetry(`/movie/${movieId}`),
-                    fetchWithRetry(`/movie/${movieId}/credits`)
+                    fetchWithRetry(`/movie/${movieId}/credits`),
+                    fetchWithRetry(`/movie/${movieId}/videos`)
                 ]);
 
                 movieApiData = details.data;
                 movieCreditsData = credits.data;
+
+                const trailer = videos.data.results.find(vid => vid.type === 'Trailer' && vid.site === 'YouTube');
+                const trailerKey = trailer ? trailer.key : "";
 
             } catch (apiError) {
                 console.error("TMDB Error:", apiError.message);
@@ -76,6 +80,7 @@ const addShow = async (req, res) => {
                 tagline: movieApiData.tagline || "",
                 vote_average: movieApiData.vote_average,
                 runtime: movieApiData.runtime,
+                trailer: trailerKey
             };
 
             movie = await movieModel.create(movieDetails);
@@ -136,6 +141,21 @@ const getShow = async (req , res) => {
         const shows = await showModel.find({movie: movieId, showDateTime: { $gte: new Date() }})
 
         const movie = await movieModel.findById(movieId);
+
+        // Fetch trailer if it's missing (for older movies in DB)
+        if (movie && !movie.trailer) {
+            try {
+                const { data } = await fetchWithRetry(`/movie/${movieId}/videos`);
+                const trailer = data.results.find(vid => vid.type === 'Trailer' && vid.site === 'YouTube');
+                if (trailer) {
+                    movie.trailer = trailer.key;
+                    await movie.save();
+                }
+            } catch (e) {
+                console.error("Failed to fetch trailer for existing movie:", e.message);
+            }
+        }
+
         const dateTime = {}; 
 
         shows.forEach((show)=> {
