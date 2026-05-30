@@ -12,7 +12,7 @@ const isAdmin = async (req , res) => {
 const getDashboardData = async (req , res) => {
     try {
         const bookings = await bookingModel.find({});
-        const activeShows = await showModel.find({showDateTime: {$gte: new Date()}}).populate('movie');
+        const activeShows = await showModel.find({showDateTime: {$gte: new Date()}}).populate('movie').sort({ showDateTime: 1 });
 
         const totalUser = await userModel.countDocuments();
 
