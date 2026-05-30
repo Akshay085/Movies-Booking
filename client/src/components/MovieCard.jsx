@@ -11,9 +11,9 @@ const MovieCard = ({movie}) => {
     <div className='flex flex-col justify-between p-3 bg-surface border border-white/5 rounded-2xl hover:-translate-y-1 hover:border-primary/20 transition duration-300 w-66 shadow-xl'>
         
         <img onClick={()=> {navigate(`/movies/${movie._id}`); scrollTo(0,0)}}
-        src={image_base_url + movie.poster_path} alt='' className='rounded-lg h-52 w-full object-cover object-right-bottom cursor-pointer' />
+        src={image_base_url + movie.poster_path} alt='' className='rounded-lg w-full aspect-[2/3] object-cover cursor-pointer' />
 
-        <p className='font-serif font-semibold mt-2 truncate text-lg'>{movie.title}</p>
+        <p className='font-sans font-bold mt-2 truncate text-lg text-white tracking-wide'>{movie.title}</p>
 
         <p className='text-sm text-gray-400 mt-2'>
             {new Date(movie.release_date).getFullYear()} - {movie.genres.slice(0,2).map(genre => genre.name).join(" , ")} - {timeFormat(movie.runtime)}

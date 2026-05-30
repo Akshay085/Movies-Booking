@@ -57,7 +57,7 @@ const Dashbord = () => {
             <div key={index} className='flex items-center justify-between p-6 bg-primary/5 border 
             border-primary/10 rounded-2xl hover:border-primary/30 transition-all shadow-sm'>
               <div>
-                <h1 className='text-xs font-semibold text-gray-400 uppercase tracking-wider'>{card.title}</h1>
+                <p className='text-xs font-semibold text-gray-400 uppercase tracking-wider'>{card.title}</p>
                 <p className='text-2xl font-bold mt-2 text-white'>{card.value}</p>
               </div>
               <div className='bg-primary/20 p-3 rounded-xl'>
