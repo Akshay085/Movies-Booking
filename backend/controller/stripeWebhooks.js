@@ -1,6 +1,6 @@
 import Stripe from "stripe";
 import bookingModel from "../models/bookingModel.js";
-import { inngest } from "../inngest/index.js";
+import { sendBookingConfirmationEmail } from "../utils/emailHelper.js";
 
 const stripeWebhooks = async (req ,res) => {
     const stripeInstance = new Stripe(process.env.STRIPE_SECRET_KEY);
@@ -30,10 +30,7 @@ const stripeWebhooks = async (req ,res) => {
                     await booking.save();
                     
                     // Send Confirmation Email
-                    await inngest.send({
-                        name: "app/show.booked",
-                        data: { bookingId: bookingId.toString() }
-                    });
+                    sendBookingConfirmationEmail(bookingId.toString()).catch(err => console.error(err));
                 }
             }
         }
@@ -49,10 +46,7 @@ const stripeWebhooks = async (req ,res) => {
                     await booking.save();
                     
                     // Send Confirmation Email
-                    await inngest.send({
-                        name: "app/show.booked",
-                        data: { bookingId: bookingId.toString() }
-                    });
+                    sendBookingConfirmationEmail(bookingId.toString()).catch(err => console.error(err));
                 }
             }
         }

@@ -2,6 +2,7 @@ import { inngest } from "../inngest/index.js";
 import bookingModel from "../models/bookingModel.js";
 import showModel from "../models/showModel.js";
 import Stripe from "stripe";
+import { sendBookingConfirmationEmail } from "../utils/emailHelper.js";
 
 
 //Function to check availability of selected seats for a movie
@@ -147,10 +148,7 @@ const verifyPayments = async (req, res) => {
                                 booking.paymentLink = "";
                                 await booking.save();
                                 // Send Confirmation Email
-                                await inngest.send({
-                                    name: "app/show.booked",
-                                    data: { bookingId: booking._id.toString() }
-                                });
+                                sendBookingConfirmationEmail(booking._id.toString()).catch(err => console.error(err));
                             }
                         } catch(e) {
                             console.error("Failed to verify PI:", e.message);
@@ -166,10 +164,7 @@ const verifyPayments = async (req, res) => {
                                     booking.paymentLink = "";
                                     await booking.save();
                                     // Send Confirmation Email
-                                    await inngest.send({
-                                        name: "app/show.booked",
-                                        data: { bookingId: booking._id.toString() }
-                                    });
+                                    sendBookingConfirmationEmail(booking._id.toString()).catch(err => console.error(err));
                                 }
                             } catch (e) {
                                 console.error("Failed to verify session:", e.message);
