@@ -41,15 +41,6 @@ const stripeWebhooks = async (req ,res) => {
             }
         }
 
-        // Send Confirmation Email only if payment was successful and bookingId is found
-        if (bookingId) {
-            console.log("Sending Confirmation Email Event for Booking ID:", bookingId);
-            await inngest.send({
-                name: "app/show.booked",
-                data: { bookingId }
-            });
-        }
-
         res.status(200).json({ received: true });
 
     } catch (error) {
