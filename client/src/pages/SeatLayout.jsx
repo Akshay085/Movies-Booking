@@ -102,7 +102,7 @@ const SeatLayout = () => {
 
   const renderSeats = (row, count=9) => (
     <div key={row} className='flex gap-2 mt-2'>
-      <div className='flex flex-wrap items-center justify-center gap-2'>
+      <div className='flex flex-nowrap items-center justify-center gap-2'>
         {Array.from({length: count},(_,i)=>{
           const seatId = `${row}${i+1}`;
           const isOccupied = occupiedSeats.includes(seatId)
@@ -128,12 +128,12 @@ const SeatLayout = () => {
     <div className="flex flex-col lg:flex-row px-4 md:px-16 lg:px-40 py-24 md:py-40 gap-10">
       {/* Available Timing - Top on mobile, Side on desktop */}
       <div className='w-full lg:w-64 shrink-0 bg-surface border border-white/5 rounded-2xl py-8 h-max lg:sticky lg:top-32 shadow-2xl'>
-        <p className='text-lg font-serif font-semibold px-6 text-primary border-b border-white/5 pb-4 mb-4'>Show Timings</p>
+        <p className='text-lg font-serif px-6 text-primary border-b border-white/5 pb-4 mb-4 tracking-widest'>Show Timings</p>
         <div className='flex lg:flex-col overflow-x-auto lg:overflow-x-visible no-scrollbar px-2 lg:px-0 gap-2 lg:gap-1'>
           {show.dateTime[date]?.map((item)=>(
             <div key={item.time} onClick={()=> setSelectedTime(item)}
             className={`flex items-center gap-3 px-6 py-3 min-w-max lg:w-full rounded-xl lg:rounded-r-full lg:rounded-l-none cursor-pointer transition-all duration-300 ${selectedTime?.time ===
-              item.time ? 'bg-primary text-black font-bold' : 'text-gray-400 hover:bg-primary/10 hover:text-white'}` }>
+              item.time ? 'bg-primary text-black font-medium' : 'text-gray-400 hover:bg-primary/10 hover:text-white'}` }>
               <ClockIcon className='w-4 h-4'/>
               <p className='text-sm'>{isoTimeFormat(item.time)}</p>
             </div>
@@ -159,7 +159,7 @@ const SeatLayout = () => {
 
           {/* Seat Grid with Scroll on Mobile */}
           <div className='w-full overflow-x-auto py-10 no-scrollbar cursor-grab active:cursor-grabbing'>
-            <div className='flex flex-col items-center min-w-[500px] md:min-w-0'>
+            <div className='flex flex-col items-center min-w-[750px] xl:min-w-0'>
               <div className='flex flex-col items-center gap-2 mb-8'>
                 {groupRows[0].map(row => renderSeats(row))}
               </div>

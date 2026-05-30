@@ -158,7 +158,7 @@ const AddShows = () => {
 
         {/* Selected Schedule List */}
         <div className='bg-primary/5 border border-primary/10 rounded-2xl p-6'>
-          <h2 className='text-sm font-semibold mb-4 text-primary uppercase tracking-wider'>Selected Schedule</h2>
+          <h2 className='text-sm font-semibold mb-4 text-primary uppercase tracking-widest'>Selected Schedule</h2>
           {Object.keys(dateTimeSelection).length > 0 ? (
             <ul className='space-y-4'>
               {Object.entries(dateTimeSelection).map(([date,times])=>(

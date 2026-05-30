@@ -74,7 +74,7 @@ const Dashbord = () => {
       </div>
 
       {/* Active Shows Grid */}
-      <div className='relative grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 mt-6'>
+      <div className='relative grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6 mt-6'>
         <BlurCircle top='100px' left='-10%'/>
         {dashboardData.activeShows.map((show)=>(
           <div key={show._id} className='group flex flex-col bg-surface border border-white/5 rounded-2xl overflow-hidden hover:-translate-y-1 transition duration-300 shadow-xl'>

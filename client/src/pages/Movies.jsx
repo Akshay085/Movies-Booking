@@ -13,7 +13,7 @@ const Movies = () => {
       <BlurCircle bottom="50px" right="50px"/>
 
       <h1 className='text-3xl font-serif font-semibold my-6 text-primary'>Now Showing</h1>
-      <div className='flex flex-wrap max-sm:justify-center gap-8'>
+      <div className='grid grid-cols-2 sm:flex sm:flex-wrap gap-4 sm:gap-8 justify-items-center'>
         {shows.map((movie)=> (
           <MovieCard movie={movie} key={movie._id}/>
         ))}

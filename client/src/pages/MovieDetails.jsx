@@ -133,7 +133,7 @@ const MovieDetails = () => {
       <DateSelect dateTime={show.dateTime} id={id}/>
 
       <p className='text-lg font-medium mt-20 mb-8'>You May Also Like</p>
-      <div className='flex flex-wrap max-sm:justify-center gap-8'>
+      <div className='grid grid-cols-2 sm:flex sm:flex-wrap gap-4 sm:gap-8 justify-items-center'>
         {shows.slice(0,4).map((movie , index)=>(
           <MovieCard key={index} movie={movie}/>
         ))}
