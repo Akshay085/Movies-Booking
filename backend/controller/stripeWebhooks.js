@@ -23,10 +23,18 @@ const stripeWebhooks = async (req ,res) => {
             const session = event.data.object;
             if (session.payment_status === "paid") {
                 bookingId = session.metadata.bookingId;
-                await bookingModel.findByIdAndUpdate(bookingId, {
-                    isPaid: true,
-                    paymentLink: ""
-                });
+                const booking = await bookingModel.findById(bookingId);
+                if (booking && !booking.isPaid) {
+                    booking.isPaid = true;
+                    booking.paymentLink = "";
+                    await booking.save();
+                    
+                    // Send Confirmation Email
+                    await inngest.send({
+                        name: "app/show.booked",
+                        data: { bookingId: bookingId.toString() }
+                    });
+                }
             }
         }
         
@@ -34,10 +42,18 @@ const stripeWebhooks = async (req ,res) => {
             const paymentIntent = event.data.object;
             if (paymentIntent.metadata && paymentIntent.metadata.bookingId) {
                 bookingId = paymentIntent.metadata.bookingId;
-                await bookingModel.findByIdAndUpdate(bookingId, {
-                    isPaid: true,
-                    paymentLink: ""
-                });
+                const booking = await bookingModel.findById(bookingId);
+                if (booking && !booking.isPaid) {
+                    booking.isPaid = true;
+                    booking.paymentLink = "";
+                    await booking.save();
+                    
+                    // Send Confirmation Email
+                    await inngest.send({
+                        name: "app/show.booked",
+                        data: { bookingId: bookingId.toString() }
+                    });
+                }
             }
         }
 
