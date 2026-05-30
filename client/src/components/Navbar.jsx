@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { assets } from '../assets/assets'
 import { MenuIcon, SearchIcon, TicketIcon, TicketPlus, XIcon } from 'lucide-react'
@@ -7,14 +7,38 @@ import { useAppContext } from '../context/AppContext'
 
 const Navbar = () => {
     const [isOpen , setIsOpen] = useState(false)
+    const [isScrolled, setIsScrolled] = useState(false)
     const {user} = useUser()
     const {openSignIn} = useClerk()
 
     const navigate = useNavigate()
     const {favoriteMovies} = useAppContext()
 
+    useEffect(() => {
+        const handleScroll = () => {
+            if (window.scrollY > 20) {
+                setIsScrolled(true)
+            } else {
+                setIsScrolled(false)
+            }
+        }
+        window.addEventListener('scroll', handleScroll)
+        return () => window.removeEventListener('scroll', handleScroll)
+    }, [])
+
+    useEffect(() => {
+        if (isOpen) {
+            document.body.style.overflow = 'hidden'
+        } else {
+            document.body.style.overflow = ''
+        }
+        return () => {
+            document.body.style.overflow = ''
+        }
+    }, [isOpen])
+
   return (
-    <div className='fixed top-0 left-0 z-50 w-full flex items-center justify-between px-6 md:px-16 lg:px-36 py-5 transition-all duration-300'>
+    <div className={`fixed top-0 left-0 z-50 w-full flex items-center justify-between px-6 md:px-16 lg:px-36 py-5 transition-all duration-300 ${isScrolled ? 'bg-background/85 backdrop-blur-md border-b border-white/5 py-4 shadow-lg' : 'bg-transparent'}`}>
         <Link to='/' className='z-[60]'>
             <div className='flex items-center text-xl md:text-2xl tracking-[0.2em] font-logo'>
                 <span className='text-primary'>AVR</span>
@@ -30,7 +54,7 @@ const Navbar = () => {
         </div>
 
         <div className='flex items-center gap-4 md:gap-8'>
-            <SearchIcon className='hidden sm:block w-5 h-5 cursor-pointer hover:text-primary transition'/>
+            
             {
                 !user ? (
                     <button onClick={openSignIn} className='px-5 py-1.5 sm:px-7 sm:py-2 bg-primary hover:bg-primary-dull transition rounded-full font-medium cursor-pointer text-sm md:text-base text-black'>

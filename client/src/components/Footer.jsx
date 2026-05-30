@@ -14,7 +14,7 @@ const Footer = () => {
                     </p>
                     
                 </div>
-                <div className="flex-1 flex items-start md:justify-end gap-20 md:gap-40">
+                <div className="flex-1 flex flex-wrap items-start md:justify-end gap-10 sm:gap-20 md:gap-40">
                     <div>
                         <h2 className="font-logo font-semibold mb-5 text-lg text-primary">AVR Theater</h2>
                         <ul className="text-sm space-y-2">

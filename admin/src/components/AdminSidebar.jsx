@@ -41,7 +41,7 @@ const AdminSidebar = () => {
       </div>
 
       {/* Mobile Bottom Navigation (Visible on small screens) */}
-      <div className='md:hidden fixed bottom-0 left-0 right-0 h-16 bg-background border-t border-gray-300/10 flex items-center justify-around z-50 px-2 shadow-2xl'>
+      <div className='md:hidden fixed bottom-0 left-0 right-0 h-16 bg-background/80 backdrop-blur-lg border-t border-white/10 flex items-center justify-around z-50 px-2 shadow-2xl'>
           {adminNavLinks.map((link, index) => (
               <NavLink 
                   key={index} 

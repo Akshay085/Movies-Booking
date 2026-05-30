@@ -56,4 +56,19 @@ const getAllBookings = async (req , res) => {
     }
 }
 
-export { isAdmin, getDashboardData, getAllShows, getAllBookings };
+// API for admin login
+const adminLogin = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+        if (email === "avrtheater@gmail.com" && password === process.env.ADMIN_PASSWORD) {
+            res.json({ success: true, token: "avr-admin-token-xyz" });
+        } else {
+            res.json({ success: false, message: "Invalid email or password" });
+        }
+    } catch (error) {
+        console.error(error);
+        res.json({ success: false, message: error.message });
+    }
+}
+
+export { isAdmin, getDashboardData, getAllShows, getAllBookings, adminLogin };
