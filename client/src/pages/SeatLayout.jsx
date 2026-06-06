@@ -19,7 +19,7 @@ const SeatLayout = () => {
   const [show, setShow] = useState(null)
   const [occupiedSeats, setOccupiedSeats] = useState([])
   
-  const { axios, getToken , image_base_url } = useAppContext()
+  const { axios, getToken , image_base_url, currency } = useAppContext()
   const navigate = useNavigate()
   const { openSignIn } = useClerk()
 
@@ -31,6 +31,9 @@ const SeatLayout = () => {
           movie: data.movie,
           dateTime: data.dateTime
         })
+        if (data.dateTime && data.dateTime[date] && data.dateTime[date].length > 0) {
+          setSelectedTime(data.dateTime[date][0])
+        }
       }
     } catch (error) {
       console.error(error)
@@ -190,6 +193,23 @@ const SeatLayout = () => {
           </div>
 
           <div className='mt-12 flex flex-col items-center gap-4 w-full'>
+            {selectedTime && (
+              <div className='flex flex-col sm:flex-row items-center gap-4 sm:gap-6 text-sm text-gray-300 bg-white/5 border border-white/10 px-6 py-3 rounded-full backdrop-blur-md shadow-lg mb-2'>
+                <div className='flex items-center gap-2'>
+                  <span className='text-gray-400'>Seat Price:</span>
+                  <span className='text-primary font-semibold'>{currency}{selectedTime.showPrice || 0}</span>
+                </div>
+                {selectedSeats.length > 0 && (
+                  <>
+                    <span className='hidden sm:block text-gray-600'>|</span>
+                    <div className='flex items-center gap-2'>
+                      <span className='text-gray-400'>Total Price ({selectedSeats.length} {selectedSeats.length === 1 ? 'Seat' : 'Seats'}):</span>
+                      <span className='text-primary font-bold text-base'>{currency}{(selectedTime.showPrice || 0) * selectedSeats.length}</span>
+                    </div>
+                  </>
+                )}
+              </div>
+            )}
             {selectedSeats.length > 0 && (
               <p className='text-sm text-gray-300'>
                 Selected: <span className='text-primary font-bold'>{selectedSeats.join(", ")}</span>

@@ -164,7 +164,7 @@ const getShow = async (req , res) => {
             if(!dateTime[date]){
                 dateTime[date] = []
             }
-            dateTime[date].push({ time: show.showDateTime , showId: show._id})
+            dateTime[date].push({ time: show.showDateTime , showId: show._id, showPrice: show.showPrice})
         })
 
         res.json({success: true , movie , dateTime})
