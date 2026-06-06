@@ -139,7 +139,7 @@ const getShows = async (req , res) => {
 const getShow = async (req , res) => {
     try {
         const {movieId} = req.params;
-        const shows = await showModel.find({movie: movieId, showDateTime: { $gte: new Date() }})
+        const shows = await showModel.find({movie: movieId, showDateTime: { $gte: new Date() }}).sort({ showDateTime: 1 })
 
         const movie = await movieModel.findById(movieId);
 
