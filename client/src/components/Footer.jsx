@@ -31,6 +31,7 @@ const Footer = () => {
                             <Link to="tel:+918200341437" className='hover:text-primary transition'>
                                 +91 8200341437
                             </Link>
+                            <br/>
                             <Link to="mailto:avrtheater@gmail.com" className='hover:text-primary transition'>
                                 avrtheater@gmail.com
                             </Link>
