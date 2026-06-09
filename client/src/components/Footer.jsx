@@ -28,7 +28,9 @@ const Footer = () => {
                     <div>
                         <h2 className="font-serif font-semibold mb-5 text-lg text-primary">Get in touch</h2>
                         <div className="text-sm space-y-2">
-                            <p>+91 8200341437</p>
+                            <Link to="tel:+918200341437" className='hover:text-primary transition'>
+                                +91 8200341437
+                            </Link>
                             <Link to="mailto:avrtheater@gmail.com" className='hover:text-primary transition'>
                                 avrtheater@gmail.com
                             </Link>

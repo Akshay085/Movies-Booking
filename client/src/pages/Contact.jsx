@@ -2,8 +2,10 @@ import React, { useState } from 'react'
 import BlurCircle from '../components/BlurCircle'
 import { Phone, Mail, MapPin, Clock, Send } from 'lucide-react'
 import toast from 'react-hot-toast'
+import { useAppContext } from '../context/AppContext'
 
 const Contact = () => {
+  const { axios } = useAppContext()
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -19,7 +21,7 @@ const Contact = () => {
     })
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     if (!formData.name || !formData.email || !formData.message) {
       toast.error("Please fill in all required fields.")
@@ -27,16 +29,26 @@ const Contact = () => {
     }
 
     setIsSubmitting(true)
-    setTimeout(() => {
+    try {
+      const { data } = await axios.post('/api/contact', formData)
+      if (data.success) {
+        toast.success(data.message || "Message sent successfully!")
+        setFormData({
+          name: '',
+          email: '',
+          subject: '',
+          message: ''
+        })
+      } else {
+        toast.error(data.message || "Failed to send message.")
+      }
+    } catch (error) {
+      console.error("Error submitting contact form:", error)
+      const errorMsg = error.response?.data?.message || "An error occurred while sending your message. Please try again."
+      toast.error(errorMsg)
+    } finally {
       setIsSubmitting(false)
-      toast.success("Demo Message sent! (Client State Submission)")
-      setFormData({
-        name: '',
-        email: '',
-        subject: '',
-        message: ''
-      })
-    }, 1000)
+    }
   }
 
   return (
@@ -51,7 +63,7 @@ const Contact = () => {
         </h1>
         <div className="h-1 w-20 bg-primary mx-auto mb-4 rounded-full"></div>
         <p className="text-gray-300 font-light text-sm">
-          Have questions or want to leave feedback? Submit the demo form below or contact us via our mock channels.
+          Have questions or want to leave feedback? Submit the form below or contact us via our channels.
         </p>
       </div>
 
@@ -88,7 +100,7 @@ const Contact = () => {
 
         {/* Right Side: Contact Form */}
         <div className="lg:col-span-7 bg-surface/50 border border-white/5 rounded-2xl p-6 backdrop-blur-sm">
-          <h3 className="text-xl font-serif text-white tracking-wide mb-4">DEMO FEEDBACK FORM</h3>
+          <h3 className="text-xl font-serif text-white tracking-wide mb-4">FEEDBACK FORM</h3>
           
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
