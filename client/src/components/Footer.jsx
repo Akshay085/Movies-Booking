@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { TicketIcon } from 'lucide-react'
 
 const Footer = () => {
@@ -10,7 +11,7 @@ const Footer = () => {
                         <span className='text-white'>Theater</span>
                     </div>
                     <p className="mt-6 text-sm">
-                        Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                        AVR Theater is a premium multiplex cinema offering the ultimate movie-watching experience with state-of-the-art 4K laser projection, immersive Dolby Atmos surround sound, and gourmet refreshments.
                     </p>
                     
                 </div>
@@ -18,17 +19,19 @@ const Footer = () => {
                     <div>
                         <h2 className="font-logo font-semibold mb-5 text-lg text-primary">AVR Theater</h2>
                         <ul className="text-sm space-y-2">
-                            <li><a href="#" className='hover:text-primary transition'>Home</a></li>
-                            <li><a href="#" className='hover:text-primary transition'>About us</a></li>
-                            <li><a href="#" className='hover:text-primary transition'>Contact us</a></li>
-                            <li><a href="#" className='hover:text-primary transition'>Privacy policy</a></li>
+                            <li><Link to="/" onClick={() => window.scrollTo(0, 0)} className='hover:text-primary transition'>Home</Link></li>
+                            <li><Link to="/about" onClick={() => window.scrollTo(0, 0)} className='hover:text-primary transition'>About us</Link></li>
+                            <li><Link to="/contact" onClick={() => window.scrollTo(0, 0)} className='hover:text-primary transition'>Contact us</Link></li>
+                            <li><Link to="/privacy" onClick={() => window.scrollTo(0, 0)} className='hover:text-primary transition'>Privacy policy</Link></li>
                         </ul>
                     </div>
                     <div>
                         <h2 className="font-serif font-semibold mb-5 text-lg text-primary">Get in touch</h2>
                         <div className="text-sm space-y-2">
                             <p>+91 8200341437</p>
-                            <p>avrtheater@gmail.com</p>
+                            <Link to="mailto:avrtheater@gmail.com" className='hover:text-primary transition'>
+                                avrtheater@gmail.com
+                            </Link>
                         </div>
                     </div>
                 </div>

@@ -1,0 +1,24 @@
+{
+  "short_name": "AVR Theater",
+  "name": "AVR Theater - Cinematic Movie Booking",
+  "description": "Book movie tickets online with premium recliner layouts, high-fidelity sound systems, and a luxury movie theatre experience.",
+  "icons": [
+    {
+      "src": "logo192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "logo512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#0B0A0F",
+  "theme_color": "#C5A059",
+  "display": "standalone",
+  "orientation": "portrait"
+}

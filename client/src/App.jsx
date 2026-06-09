@@ -11,6 +11,9 @@ import Payment from './pages/Payment'
 import {Toaster} from 'react-hot-toast'
 import Footer from './components/Footer'
 import Loading from './components/Loading'
+import About from './pages/About'
+import Contact from './pages/Contact'
+import Privacy from './pages/Privacy'
 
 const App = () => {
   return (
@@ -26,6 +29,9 @@ const App = () => {
         <Route path='/loading/:nextUrl' element={<Loading />} />
         <Route path='/payment/:bookingId' element={<Payment />} />
         <Route path='/favorite' element={<Favorite />} />
+        <Route path='/about' element={<About />} />
+        <Route path='/contact' element={<Contact />} />
+        <Route path='/privacy' element={<Privacy />} />
       </Routes>
       <Footer />
     </>
